@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aidil Afif · Portfolio</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+           RESET & BASE - DARK THEME ONLY
+           ============================================================ */
+        :root {
+            --pixel-font: 'Press Start 2P', monospace;
+            --body-font: 'Inter', sans-serif;
+            
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #242424;
+            --text-primary: #e8e8e8;
+            --text-secondary: #b0b0b0;
+            --text-muted: #6a6a6a;
+            --border-color: #2a2a2a;
+            --pixel-border: #d4af37;
+            --pixel-border-glow: #ffd700;
+            --glow-color: rgba(212, 175, 55, 0.1);
+            --terminal-bg: #0a0a0a;
+            --terminal-text: #00ff41;
+            --canvas-opacity: 0.6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); border-left: 2px solid var(--border-color); }
+        ::-webkit-scrollbar-thumb { background: var(--pixel-border); border: 2px solid var(--bg-primary); box-shadow: 0 0 10px var(--pixel-border-glow); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--pixel-border-glow); }
+
+        ::selection { background: var(--pixel-border); color: #0a0a0a; }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: var(--canvas-opacity);
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           PIXEL STYLE
+           ============================================================ */
+        .pixel-text {
+            font-family: var(--pixel-font);
+            letter-spacing: 0.02em;
+            image-rendering: pixelated;
+        }
+
+        .pixel-border-bottom {
+            border-bottom: 3px solid var(--pixel-border);
+            box-shadow: 0 2px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+        }
+        .pixel-border-top {
+            border-top: 3px solid var(--pixel-border);
+            box-shadow: 0 -2px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+        }
+
+        .pixel-divider {
+            display: inline-block;
+            width: 30px;
+            height: 3px;
+            background: var(--pixel-border);
+            box-shadow: 2px 2px 0 var(--pixel-border), 0 0 10px var(--glow-color);
+        }
+        .pixel-divider-center {
+            width: 60px;
+            height: 3px;
+            background: var(--pixel-border);
+            margin: 0.5rem auto;
+            box-shadow: 2px 2px 0 var(--pixel-border), 0 0 10px var(--glow-color);
+        }
+
+        .pixel-subtitle {
+            font-family: var(--pixel-font);
+            font-size: 0.65rem;
+            color: var(--pixel-border);
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
+        .pixel-navbar {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 3px solid var(--pixel-border);
+            box-shadow: 0 4px 0 var(--pixel-border), 0 0 40px var(--glow-color);
+            backdrop-filter: blur(20px);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            transition: all 0.3s ease;
+        }
+
+        .pixel-brand {
+            font-family: var(--pixel-font);
+            font-size: 1.1rem;
+            color: var(--text-primary) !important;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0;
+            transition: all 0.3s ease;
+        }
+        .pixel-brand:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 30px var(--pixel-border-glow);
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--pixel-border);
+            color: #0a0a0a;
+            font-size: 0.8rem;
+            box-shadow: 3px 3px 0 rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        .pixel-brand:hover .brand-icon {
+            transform: rotate(-10deg) scale(1.05);
+            box-shadow: 4px 4px 0 var(--pixel-border-glow);
+        }
+
+        .brand-text {
+            background: linear-gradient(135deg, var(--pixel-border) 0%, var(--pixel-border-glow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .brand-cursor {
+            color: var(--pixel-border);
+            animation: blink 1s step-end infinite;
+            font-size: 1.2rem;
+            -webkit-text-fill-color: var(--pixel-border);
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .pixel-toggler {
+            border: 2px solid var(--pixel-border) !important;
+            padding: 0.5rem 0.6rem !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: 2px 2px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+            transition: all 0.3s ease;
+        }
+        .pixel-toggler:hover {
+            background: var(--pixel-border) !important;
+            box-shadow: 3px 3px 0 var(--pixel-border-glow), 0 0 30px var(--glow-color);
+        }
+
+        .toggler-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 24px;
+            height: 18px;
+            justify-content: center;
+        }
+        .toggler-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+            box-shadow: 1px 1px 0 var(--pixel-border);
+        }
+        .pixel-toggler:hover .toggler-icon span {
+            background: #0a0a0a;
+        }
+        .pixel-toggler[aria-expanded="true"] .toggler-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .pixel-toggler[aria-expanded="true"] .toggler-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        .pixel-toggler[aria-expanded="true"] .toggler-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .pixel-nav-link {
+            font-family: var(--body-font);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary) !important;
+            padding: 0.5rem 0.8rem !important;
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .pixel-nav-link .nav-icon {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .pixel-nav-link:hover {
+            color: var(--pixel-border) !important;
+            transform: translateY(-2px);
+            text-shadow: 0 0 20px var(--pixel-border-glow);
+        }
+        .pixel-nav-link:hover .nav-icon {
+            opacity: 1;
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .pixel-nav-link.active {
+            color: var(--pixel-border) !important;
+            border-bottom: 2px solid var(--pixel-border);
+            text-shadow: 0 0 20px var(--pixel-border-glow);
+        }
+        .pixel-nav-link.active .nav-icon {
+            opacity: 1;
+            color: var(--pixel-border);
+        }
+        .pixel-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--pixel-border);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+        .pixel-nav-link:hover::after,
+        .pixel-nav-link.active::after {
+            width: 70%;
+        }
+
+        @media (max-width: 992px) {
+            .pixel-navbar { padding: 0.3rem 0; }
+            .navbar-collapse {
+                background: rgba(10, 10, 10, 0.98);
+                padding: 1rem 0.5rem;
+                margin-top: 0.5rem;
+                border: 2px solid var(--pixel-border);
+                box-shadow: 4px 4px 0 var(--pixel-border), inset 0 0 30px rgba(212, 175, 55, 0.05);
+                backdrop-filter: blur(10px);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            .pixel-nav-link {
+                padding: 0.6rem 1rem !important;
+                border: 2px solid transparent;
+                border-radius: 0;
+                font-size: 0.7rem;
+                justify-content: flex-start;
+                gap: 0.8rem;
+                border-left: 3px solid transparent;
+                transition: all 0.3s ease;
+            }
+            .pixel-nav-link .nav-icon {
+                font-size: 0.9rem;
+                width: 20px;
+                text-align: center;
+            }
+            .pixel-nav-link:hover {
+                background: rgba(212, 175, 55, 0.08);
+                border-left-color: var(--pixel-border);
+                transform: translateX(4px);
+            }
+            .pixel-nav-link.active {
+                background: rgba(212, 175, 55, 0.12);
+                border-left-color: var(--pixel-border);
+                border-bottom: none;
+            }
+            .pixel-nav-link::after { display: none; }
+            .pixel-brand { font-size: 0.9rem; }
+            .brand-icon { width: 28px; height: 28px; font-size: 0.7rem; }
+            .brand-cursor { font-size: 1rem; }
+        }
+
+        @media (max-width: 576px) {
+            .pixel-navbar { padding: 0.2rem 0; }
+            .pixel-brand { font-size: 0.75rem; gap: 0.3rem; }
+            .brand-icon { width: 24px; height: 24px; font-size: 0.6rem; }
+            .brand-cursor { font-size: 0.8rem; }
+            .pixel-nav-link { font-size: 0.6rem; padding: 0.4rem 0.8rem !important; }
+            .pixel-nav-link .nav-icon { font-size: 0.75rem; width: 16px; }
+            .navbar-collapse { padding: 0.8rem 0.3rem; max-height: 70vh; }
+            .pixel-toggler { padding: 0.3rem 0.4rem !important; }
+            .toggler-icon { width: 20px; height: 15px; gap: 3px; }
+            .toggler-icon span { height: 2px; }
+        }
+
+        /* ============================================================
+           BUTTONS
+           ============================================================ */
+        .btn-pixel-primary {
+            font-family: var(--pixel-font);
+            font-size: 0.65rem;
+            padding: 0.8rem 2rem;
+            border: 3px solid var(--pixel-border);
+            background: var(--pixel-border);
+            color: #0a0a0a;
+            box-shadow: 4px 4px 0 rgba(212, 175, 55, 0.5), 0 0 30px var(--glow-color);
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .btn-pixel-primary:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 rgba(212, 175, 55, 0.5), 0 0 40px var(--glow-color);
+            background: #ffd700;
+            color: #0a0a0a;
+        }
+
+        .btn-pixel-outline {
+            font-family: var(--pixel-font);
+            font-size: 0.65rem;
+            padding: 0.8rem 2rem;
+            border: 3px solid var(--pixel-border);
+            background: transparent;
+            color: var(--text-primary);
+            box-shadow: 4px 4px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-pixel-outline:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--pixel-border), 0 0 30px var(--glow-color);
+            background: var(--pixel-border);
+            color: #0a0a0a;
+        }
+
+        /* ============================================================
+           BADGE
+           ============================================================ */
+        .pixel-badge {
+            font-family: var(--pixel-font);
+            font-size: 0.5rem;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border: 2px solid var(--pixel-border);
+            background: var(--bg-secondary);
+            color: var(--pixel-border);
+            box-shadow: 3px 3px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+        }
+        .pixel-badge-sm {
+            font-family: var(--pixel-font);
+            font-size: 0.4rem;
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border: 2px solid var(--pixel-border);
+            background: var(--bg-secondary);
+            color: var(--pixel-border);
+            box-shadow: 2px 2px 0 var(--pixel-border);
+        }
+
+        /* ============================================================
+           HERO / BERANDA
+           ============================================================ */
+        .hero-section {
+            background: rgba(20, 20, 20, 0.9);
+            border-bottom: 3px solid var(--pixel-border);
+            box-shadow: 0 4px 0 var(--pixel-border), 0 0 30px var(--glow-color);
+            backdrop-filter: blur(5px);
+            padding: 4rem 0;
+        }
+
+        .pixel-avatar {
+            display: inline-block;
+            padding: 1.5rem;
+            border: 4px solid var(--pixel-border);
+            background: var(--bg-primary);
+            box-shadow: 8px 8px 0 var(--pixel-border), 0 0 40px var(--glow-color);
+            transition: all 0.3s ease;
+        }
+        .pixel-avatar.floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        .pixel-avatar:hover {
+            transform: translate(-2px, -2px) scale(1.02);
+            box-shadow: 10px 10px 0 var(--pixel-border), 0 0 60px var(--glow-color);
+        }
+
+        .pixel-profile {
+            max-width: 200px;
+            border: 3px solid var(--pixel-border);
+            image-rendering: pixelated;
+        }
+        .pixel-hearts {
+            font-size: 0.8rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .pixel-avatar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            min-height: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .pixel-avatar.floating { animation: none; }
+            .pixel-profile { max-width: 150px; }
+            .pixel-avatar-inner { min-width: 150px; min-height: 150px; }
+        }
+        @media (max-width: 576px) {
+            .pixel-profile { max-width: 120px; }
+            .pixel-avatar-inner { min-width: 120px; min-height: 120px; }
+        }
+
+        /* ============================================================
+           SECTION
+           ============================================================ */
+        section { padding: 4rem 0; }
+        .section-header h2 {
+            font-family: var(--pixel-font);
+            font-size: 1.8rem;
+            text-shadow: 0 0 30px var(--glow-color);
+        }
+        @media (max-width: 768px) {
+            section { padding: 2.5rem 0; }
+            .section-header h2 { font-size: 1.3rem; }
+        }
+
+        /* ============================================================
+           CARDS
+           ============================================================ */
+        .pixel-card {
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 0;
+            box-shadow: 6px 6px 0 var(--border-color);
+            transition: all 0.25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .pixel-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--pixel-border), 0 0 30px var(--glow-color);
+            border-color: var(--pixel-border);
+            background: var(--bg-card-hover);
+        }
+
+        /* ============================================================
+           SKILLS
+           ============================================================ */
+        .skill-category {
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 6px 6px 0 var(--border-color);
+            transition: all 0.25s ease;
+            height: 100%;
+        }
+        .skill-category:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--pixel-border), 0 0 30px var(--glow-color);
+            border-color: var(--pixel-border);
+        }
+
+        .pixel-progress-bar {
+            height: 6px;
+            background: var(--pixel-border);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 0 2px var(--pixel-border), 0 0 20px var(--glow-color);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .pixel-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .skill-item {
+            background: var(--bg-card);
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            box-shadow: 3px 3px 0 var(--border-color);
+            transition: all 0.2s ease;
+        }
+        .skill-item:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+            border-color: var(--pixel-border);
+        }
+
+        /* ============================================================
+           PROJECTS
+           ============================================================ */
+        .project-card {
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--pixel-border) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .project-card:hover::before {
+            opacity: 0.08;
+        }
+        .project-icon {
+            color: var(--pixel-border);
+            transition: transform 0.3s ease;
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+        .project-card:hover .project-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .project-number {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .pixel-tag {
+            font-family: var(--pixel-font);
+            font-size: 0.4rem;
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+
+        /* ============================================================
+           EXPERIENCE
+           ============================================================ */
+        .experience-card {
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 6px 6px 0 var(--border-color);
+            transition: all 0.25s ease;
+            height: 100%;
+        }
+        .experience-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--pixel-border), 0 0 30px var(--glow-color);
+            border-color: var(--pixel-border);
+        }
+
+        /* ============================================================
+           RESUME
+           ============================================================ */
+        .resume-card {
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            padding: 2.5rem;
+            box-shadow: 8px 8px 0 var(--border-color);
+            transition: all 0.25s ease;
+        }
+        .resume-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 var(--pixel-border), 0 0 30px var(--glow-color);
+            border-color: var(--pixel-border);
+        }
+        .resume-icon {
+            color: var(--pixel-border);
+            text-shadow: 0 0 30px var(--glow-color);
+        }
+
+        /* ============================================================
+           CONTACT
+           ============================================================ */
+        .contact-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            box-shadow: 3px 3px 0 var(--border-color);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .contact-link:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+            border-color: var(--pixel-border);
+            color: var(--pixel-border);
+        }
+
+        .pixel-social-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            box-shadow: 3px 3px 0 var(--border-color);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            min-width: 70px;
+        }
+        .pixel-social-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--pixel-border), 0 0 20px var(--glow-color);
+            border-color: var(--pixel-border);
+            color: var(--pixel-border);
+        }
+
+        .contact-form-wrapper {
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: 8px 8px 0 var(--border-color);
+        }
+        .pixel-input {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 0;
+            padding: 0.6rem 1rem;
+        }
+        .pixel-input:focus {
+            background: var(--bg-primary);
+            border-color: var(--pixel-border);
+            box-shadow: 0 0 20px var(--glow-color);
+            color: var(--text-primary);
+        }
+        .pixel-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
+        .pixel-modal .modal-content {
+            background: var(--bg-card);
+            border: 4px solid var(--pixel-border);
+            border-radius: 0;
+            box-shadow: 12px 12px 0 var(--pixel-border), 0 0 60px var(--glow-color);
+            color: var(--text-primary);
+        }
+        .pixel-modal-header {
+            border-bottom: 3px solid var(--pixel-border);
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+        }
+        .pixel-modal-header .modal-title {
+            font-family: var(--pixel-font);
+            font-size: 0.9rem;
+            color: var(--pixel-border);
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+        .pixel-close {
+            filter: invert(0);
+            opacity: 0.8;
+        }
+        .pixel-modal-body {
+            padding: 1.5rem;
+            background: var(--bg-primary);
+        }
+        .pixel-modal-footer {
+            border-top: 3px solid var(--pixel-border);
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+        }
+        .pixel-preview-box {
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            box-shadow: 4px 4px 0 var(--border-color);
+        }
+        .pixel-screenshot {
+            border: 2px solid var(--border-color);
+            image-rendering: pixelated;
+        }
+        .pixel-placeholder {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            margin: 0.5rem 0;
+        }
+        .pixel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+        .pixel-cell {
+            aspect-ratio: 1;
+            background: var(--border-color);
+            border: 1px solid var(--pixel-border);
+            transition: all 0.3s ease;
+        }
+        .pixel-cell.active {
+            background: var(--pixel-border);
+            animation: pixelPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pixelPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+        .modal.fade .modal-dialog {
+            transform: scale(0.8) rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+        .modal.show .modal-dialog {
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* ============================================================
+           TERMINAL
+           ============================================================ */
+        .pixel-terminal {
+            background: var(--terminal-bg);
+            color: var(--terminal-text);
+            border: 3px solid var(--pixel-border);
+            box-shadow: 6px 6px 0 var(--pixel-border), 0 0 30px rgba(0, 255, 65, 0.1);
+            font-family: var(--pixel-font);
+            font-size: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+        }
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1px solid #333;
+        }
+        .terminal-body {
+            color: var(--terminal-text);
+            font-size: 0.6rem;
+            line-height: 1.8;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        .terminal-body .text-primary {
+            color: var(--pixel-border) !important;
+        }
+        .terminal-body .text-success {
+            color: #00ff41 !important;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem 0;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .pixel-text { font-size: 0.8rem; }
+            .pixel-avatar-inner i { font-size: 4rem !important; }
+            .pixel-terminal { font-size: 0.4rem; }
+            .btn-pixel-primary, .btn-pixel-outline { font-size: 0.55rem; padding: 0.6rem 1.2rem; }
+            .pixel-modal-header .modal-title { font-size: 0.7rem; }
+            .pixel-avatar { padding: 1rem; }
+            .pixel-avatar.floating { animation: none; }
+            #starfield { opacity: 0.4; }
+        }
+
+        @media (max-width: 576px) {
+            .pixel-card { padding: 1rem; }
+            .pixel-social-btn { padding: 0.6rem; }
+            .pixel-social-btn i { font-size: 1.5rem !important; }
+            .pixel-modal-body { padding: 0.8rem; }
+            .contact-form-wrapper { padding: 1rem; }
+            .resume-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== CANVAS BACKGROUND ===== -->
+    <canvas id="starfield"></canvas>
+
+    <!-- ===== CONTENT WRAPPER ===== -->
+    <div class="content-wrapper">
+
+        <!-- ===== NAVBAR ===== -->
+        <nav class="navbar navbar-expand-lg pixel-navbar">
+            <div class="container">
+                <a class="navbar-brand pixel-brand" href="#home">
+                    <span class="brand-icon"><i class="fas fa-gamepad"></i></span>
+                    <span class="brand-text">AIDIL AFIF</span>
+                    <span class="brand-cursor">_</span>
+                </a>
+
+                <button class="navbar-toggler pixel-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="toggler-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+                        <li class="nav-item"><a class="nav-link pixel-nav-link active" href="#home"><i class="fas fa-home nav-icon"></i><span class="nav-label">Beranda</span></a></li>
+                        <li class="nav-item"><a class="nav-link pixel-nav-link" href="#about"><i class="fas fa-user nav-icon"></i><span class="nav-label">Tentang</span></a></li>
+                        <li class="nav-item"><a class="nav-link pixel-nav-link" href="#skills"><i class="fas fa-code nav-icon"></i><span class="nav-label">Keahlian</span></a></li>
+                        <li class="nav-item"><a class="nav-link pixel-nav-link" href="#projects"><i class="fas fa-folder-open nav-icon"></i><span class="nav-label">Proyek</span></a></li>
+                        <li class="nav-item"><a class="nav-link pixel-nav-link" href="#experience"><i class="fas fa-briefcase nav-icon"></i><span class="nav-label">Pengalaman</span></a></li>
+                        <li class="nav-item"><a class="nav-link pixel-nav-link" href="#resume"><i class="fas fa-file-alt nav-icon"></i><span class="nav-label">Resume</span></a></li>
+                        <li class="nav-item"><a class="nav-link pixel-nav-link" href="#contact"><i class="fas fa-envelope nav-icon"></i><span class="nav-label">Kontak</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ===== 1. BERANDA ===== -->
+        <section id="home" class="hero-section py-5">
+            <div class="container">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-7">
+                        <div class="pixel-badge mb-3"><i class="fas fa-star me-2"></i> PORTFOLIO</div>
+                        <h1 class="pixel-text display-4 mb-3">Halo, Saya <br />Aidil Afif</h1>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <span class="pixel-subtitle">FULL STACK DEVELOPER</span>
+                            <span class="pixel-divider"></span>
+                        </div>
+                        <p class="mb-4" style="max-width: 550px; font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.8;">
+                            Seorang Full Stack Developer yang berpengalaman membangun aplikasi berbasis web menggunakan PHP, Laravel, dan MySQL. Berkomitmen menciptakan solusi digital yang efisien dan user-friendly.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#projects" class="btn btn-pixel-primary"><i class="fas fa-arrow-right me-2"></i>Lihat Proyek</a>
+                            <a href="#contact" class="btn btn-pixel-outline"><i class="fas fa-envelope me-2"></i>Hubungi Saya</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 text-center">
+                        <div class="pixel-avatar floating">
+                            <div class="pixel-avatar-inner">
+                                <img src="assets/img/foto.jpeg" alt="Foto Aidil Afif" class="img-fluid pixel-profile" />
+                            </div>
+                            <div class="pixel-hearts mt-2">
+                                <i class="fas fa-heart text-danger"></i>
+                                <i class="fas fa-heart text-danger"></i>
+                                <i class="fas fa-heart text-danger"></i>
+                                <i class="fas fa-heart text-danger"></i>
+                                <i class="fas fa-heart text-secondary opacity-50"></i>
+                            </div>
+                            <div class="pixel-badge-sm mt-2" style="font-size: 0.4rem;">
+                                <i class="fas fa-code"></i> 100% PIXEL
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 2. TENTANG SAYA ===== -->
+        <section id="about" class="py-5 pixel-border-top pixel-border-bottom">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <span class="pixel-badge mb-2">🕹️ ABOUT ME</span>
+                    <h2 class="pixel-text">Tentang Saya</h2>
+                    <div class="pixel-divider-center"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <h5 class="pixel-text fs-6 mb-3">📋 Profil Singkat</h5>
+                        <p class="mb-4" style="line-height: 1.8;">Saya adalah lulusan S1 Teknik Informatika dengan pengalaman mengembangkan sistem inventaris dan aplikasi kunjungan online. Memiliki passion dalam membangun aplikasi yang scalable dan mudah digunakan.</p>
+                        
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="skill-item">
+                                    <i class="fas fa-user me-2" style="color: var(--pixel-border);"></i>
+                                    <span class="d-block small text-secondary">Nama</span>
+                                    <span class="d-block fw-bold">Aidil Afif</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="skill-item">
+                                    <i class="fas fa-graduation-cap me-2" style="color: var(--pixel-border);"></i>
+                                    <span class="d-block small text-secondary">Pendidikan</span>
+                                    <span class="d-block fw-bold">S1 Teknik Informatika</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="skill-item">
+                                    <i class="fas fa-map-pin me-2" style="color: var(--pixel-border);"></i>
+                                    <span class="d-block small text-secondary">Lokasi</span>
+                                    <span class="d-block fw-bold">Padang, Indonesia</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="skill-item">
+                                    <i class="fas fa-calendar me-2" style="color: var(--pixel-border);"></i>
+                                    <span class="d-block small text-secondary">Pengalaman</span>
+                                    <span class="d-block fw-bold">3+ Tahun</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <h5 class="pixel-text fs-6 mb-3">🎯 Minat & Tujuan Karier</h5>
+                        <div class="pixel-terminal p-4">
+                            <div class="terminal-header">
+                                <span class="terminal-dot bg-danger"></span>
+                                <span class="terminal-dot bg-warning"></span>
+                                <span class="terminal-dot bg-success"></span>
+                                <span class="ms-2 pixel-text small">career@goals:~$</span>
+                            </div>
+                            <div class="terminal-body mt-3">
+                                <p class="mb-1"><span class="text-success">$</span> <span class="text-primary">Membangun aplikasi web yang impactful</span></p>
+                                <p class="mb-1"><span class="text-success">$</span> <span class="text-primary">Menjadi Full Stack Developer expert</span></p>
+                                <p class="mb-1"><span class="text-success">$</span> <span class="text-primary">Berkontribusi dalam open source</span></p>
+                                <p class="mb-1"><span class="text-success">$</span> <span class="text-primary">Mengembangkan skill di bidang AI/ML</span></p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <h5 class="pixel-text fs-6 mb-2">🎓 Pendidikan</h5>
+                            <div class="skill-item mb-2">
+                                <div class="d-flex justify-content-between">
+                                    <span class="fw-bold">S1 Teknik Informatika</span>
+                                    <span class="text-secondary">2021 - 2026</span>
+                                </div>
+                                <div class="small text-secondary">Universitas Putra Indonesia "YPTK Padang"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 3. KEAHLIAN ===== -->
+        <section id="skills" class="py-5">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <span class="pixel-badge mb-2">⚡ SKILLS</span>
+                    <h2 class="pixel-text">Keahlian</h2>
+                    <div class="pixel-divider-center"></div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Frontend -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="skill-category pixel-card">
+                            <h5 class="pixel-text fs-6 mb-3"><i class="fas fa-paint-brush me-2" style="color: var(--pixel-border);"></i>Frontend</h5>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>HTML5</span><span class="text-secondary">95%</span></div><div class="pixel-progress-bar" style="width: 95%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>CSS3</span><span class="text-secondary">90%</span></div><div class="pixel-progress-bar" style="width: 90%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>JavaScript</span><span class="text-secondary">85%</span></div><div class="pixel-progress-bar" style="width: 85%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Bootstrap</span><span class="text-secondary">90%</span></div><div class="pixel-progress-bar" style="width: 90%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Tailwind CSS</span><span class="text-secondary">80%</span></div><div class="pixel-progress-bar" style="width: 80%; height: 6px;"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Backend -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="skill-category pixel-card">
+                            <h5 class="pixel-text fs-6 mb-3"><i class="fas fa-server me-2" style="color: var(--pixel-border);"></i>Backend</h5>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>PHP</span><span class="text-secondary">90%</span></div><div class="pixel-progress-bar" style="width: 90%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Laravel</span><span class="text-secondary">85%</span></div><div class="pixel-progress-bar" style="width: 85%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Node.js</span><span class="text-secondary">70%</span></div><div class="pixel-progress-bar" style="width: 70%; height: 6px;"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Database -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="skill-category pixel-card">
+                            <h5 class="pixel-text fs-6 mb-3"><i class="fas fa-database me-2" style="color: var(--pixel-border);"></i>Database</h5>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>MySQL</span><span class="text-secondary">90%</span></div><div class="pixel-progress-bar" style="width: 90%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>PostgreSQL</span><span class="text-secondary">75%</span></div><div class="pixel-progress-bar" style="width: 75%; height: 6px;"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="skill-category pixel-card">
+                            <h5 class="pixel-text fs-6 mb-3"><i class="fas fa-tools me-2" style="color: var(--pixel-border);"></i>Tools</h5>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Git</span><span class="text-secondary">85%</span></div><div class="pixel-progress-bar" style="width: 85%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>GitHub</span><span class="text-secondary">80%</span></div><div class="pixel-progress-bar" style="width: 80%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Docker</span><span class="text-secondary">70%</span></div><div class="pixel-progress-bar" style="width: 70%; height: 6px;"></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Postman</span><span class="text-secondary">85%</span></div><div class="pixel-progress-bar" style="width: 85%; height: 6px;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 4. PROYEK ===== -->
+        <section id="projects" class="py-5 pixel-border-top pixel-border-bottom">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <span class="pixel-badge mb-2">🎮 PROJECTS</span>
+                    <h2 class="pixel-text">Portofolio Proyek</h2>
+                    <div class="pixel-divider-center"></div>
+                    <p class="text-secondary mt-2">Klik kartu untuk melihat detail</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Proyek 1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card pixel-card" data-bs-toggle="modal" data-bs-target="#projectModal1">
+                            <div class="project-icon mb-3"><i class="fas fa-boxes fa-3x"></i></div>
+                            <div class="project-number pixel-badge-sm">LV. 01</div>
+                            <h5 class="pixel-text fs-6 mt-2">Sistem Inventaris Barang dan ATK</h5>
+                            <p class="small">Sistem manajemen inventaris untuk mengelola barang dan ATK di LAPAS Kelas II B Tanjung Pati.</p>
+                            <div class="project-tags mt-auto">
+                                <span class="pixel-tag">PHP</span>
+                                <span class="pixel-tag">MySQL</span>
+                                <span class="pixel-tag">Bootstrap</span>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span class="pixel-text small" style="font-size: 0.35rem;">
+                                    <i class="fas fa-chevron-circle-right"></i> KLIK UNTUK DETAIL
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proyek 2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card pixel-card" data-bs-toggle="modal" data-bs-target="#projectModal2">
+                            <div class="project-icon mb-3"><i class="fas fa-users fa-3x"></i></div>
+                            <div class="project-number pixel-badge-sm">LV. 02</div>
+                            <h5 class="pixel-text fs-6 mt-2">Aplikasi Kunjungan Online LPKA</h5>
+                            <p class="small">Aplikasi manajemen kunjungan untuk Lembaga Pembinaan Khusus Anak Berbasis Website.</p>
+                            <div class="project-tags mt-auto">
+                                <span class="pixel-tag">Laravel</span>
+                                <span class="pixel-tag">MySQL</span>
+                                <span class="pixel-tag">AJAX</span>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span class="pixel-text small" style="font-size: 0.35rem;">
+                                    <i class="fas fa-chevron-circle-right"></i> KLIK UNTUK DETAIL
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proyek 3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card pixel-card" data-bs-toggle="modal" data-bs-target="#projectModal3">
+                            <div class="project-icon mb-3"><i class="fas fa-chart-line fa-3x"></i></div>
+                            <div class="project-number pixel-badge-sm">LV. 03</div>
+                            <h5 class="pixel-text fs-6 mt-2">Sistem Monitoring Kinerja Karyawan</h5>
+                            <p class="small">Aplikasi untuk monitoring dan evaluasi kinerja karyawan.</p>
+                            <div class="project-tags mt-auto">
+                                <span class="pixel-tag">Laravel</span>
+                                <span class="pixel-tag">MySQL</span>
+                                <span class="pixel-tag">Tailwind</span>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span class="pixel-text small" style="font-size: 0.35rem;">
+                                    <i class="fas fa-chevron-circle-right"></i> KLIK UNTUK DETAIL
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MODAL PROYEK 1 ===== -->
+        <div class="modal fade pixel-modal" id="projectModal1" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content pixel-modal-content">
+                    <div class="modal-header pixel-modal-header">
+                        <h5 class="modal-title pixel-text"><i class="fas fa-boxes me-2"></i>LV. 01 - Sistem Inventaris Barang dan ATK</h5>
+                        <button type="button" class="btn-close pixel-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body pixel-modal-body">
+                        <div class="row g-4">
+                            <div class="col-lg-7">
+                                <div class="project-detail">
+                                    <div class="pixel-badge-sm mb-3">📋 MISSION BRIEF</div>
+                                    <h6 class="pixel-text fs-6 mb-3">Sistem Inventaris Barang dan ATK</h6>
+                                    <p class="mb-3">Sistem Inventaris Barang dan ATK adalah aplikasi berbasis web yang dirancang untuk membantu LAPAS Kelas II B Tanjung Pati mengelola stok barang, mencatat keluar masuk barang, dan menghasilkan laporan secara otomatis.</p>
+                                    <div class="detail-info mb-3">
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Status</span>
+                                            <span class="pixel-text" style="font-size: 0.6rem;">✅ COMPLETED</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Tahun</span>
+                                            <span>2026</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Progress</span>
+                                            <span class="pixel-text" style="font-size: 0.6rem;">100%</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-tags mb-3">
+                                        <span class="text-secondary d-block mb-2">🏷️ Teknologi:</span>
+                                        <span class="pixel-tag">PHP</span>
+                                        <span class="pixel-tag">MySQL</span>
+                                        <span class="pixel-tag">Bootstrap</span>
+                                    </div>
+                                    <div class="project-features mb-3">
+                                        <span class="text-secondary d-block mb-2">⚡ Fitur Utama:</span>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Login multi-user (Admin, Staff, Manager)</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>CRUD data barang (Tambah, Edit, Hapus)</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Laporan PDF (Barang Masuk, Barang Keluar, Stok)</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Pencarian dan filter data</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Dashboard statistik real-time</li>
+                                        </ul>
+                                    </div>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="#" target="_blank" class="btn btn-pixel-primary"><i class="fas fa-external-link-alt me-2"></i>Live Demo</a>
+                                        <a href="https://github.com/aidilafif/barang-atk-lapas" target="_blank" class="btn btn-pixel-outline"><i class="fab fa-github me-2"></i>GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="project-preview">
+                                    <div class="pixel-badge-sm mb-3">🖼️ PREVIEW</div>
+                                    <div class="pixel-preview-box text-center p-4">
+                                        <img src="assets/img/atk.jpeg" alt="Sistem Inventaris" class="img-fluid pixel-screenshot" />
+                                        <p class="small text-secondary mt-2">📸 Screenshot proyek</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pixel-modal-footer">
+                        <button type="button" class="btn btn-pixel-outline" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== MODAL PROYEK 2 ===== -->
+        <div class="modal fade pixel-modal" id="projectModal2" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content pixel-modal-content">
+                    <div class="modal-header pixel-modal-header">
+                        <h5 class="modal-title pixel-text"><i class="fas fa-users me-2"></i>LV. 02 - Aplikasi Kunjungan Online LPKA</h5>
+                        <button type="button" class="btn-close pixel-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body pixel-modal-body">
+                        <div class="row g-4">
+                            <div class="col-lg-7">
+                                <div class="project-detail">
+                                    <div class="pixel-badge-sm mb-3">📋 MISSION BRIEF</div>
+                                    <h6 class="pixel-text fs-6 mb-3">Aplikasi Kunjungan Online LPKA</h6>
+                                    <p class="mb-3">Aplikasi Kunjungan Online LPKA adalah platform digital untuk mengelola proses kunjungan di Lembaga Pembinaan Khusus Anak. Memungkinkan pengunjung mendaftar secara online dan admin melakukan verifikasi dengan mudah.</p>
+                                    <div class="detail-info mb-3">
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Status</span>
+                                            <span class="pixel-text" style="font-size: 0.6rem;">✅ COMPLETED</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Tahun</span>
+                                            <span>2026</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Progress</span>
+                                            <span class="pixel-text" style="font-size: 0.6rem;">100%</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-tags mb-3">
+                                        <span class="text-secondary d-block mb-2">🏷️ Teknologi:</span>
+                                        <span class="pixel-tag">Laravel</span>
+                                        <span class="pixel-tag">MySQL</span>
+                                        <span class="pixel-tag">AJAX</span>
+                                    </div>
+                                    <div class="project-features mb-3">
+                                        <span class="text-secondary d-block mb-2">⚡ Fitur Utama:</span>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Registrasi pengunjung online</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Persetujuan admin dengan notifikasi</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Generate QR Code untuk validasi</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Cetak laporan kunjungan</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Dashboard monitoring</li>
+                                        </ul>
+                                    </div>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="#" target="_blank" class="btn btn-pixel-primary"><i class="fas fa-external-link-alt me-2"></i>Live Demo</a>
+                                        <a href="https://github.com/aidilafif/kunjungan-online-lpka" target="_blank" class="btn btn-pixel-outline"><i class="fab fa-github me-2"></i>GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="project-preview">
+                                    <div class="pixel-badge-sm mb-3">🖼️ PREVIEW</div>
+                                    <div class="pixel-preview-box text-center p-4">
+                                        <img src="assets/img/lpka.jpeg" alt="Aplikasi Kunjungan LPKA" class="img-fluid pixel-screenshot" />
+                                        <p class="small text-secondary mt-2">📸 Screenshot proyek</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pixel-modal-footer">
+                        <button type="button" class="btn btn-pixel-outline" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== MODAL PROYEK 3 ===== -->
+        <div class="modal fade pixel-modal" id="projectModal3" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content pixel-modal-content">
+                    <div class="modal-header pixel-modal-header">
+                        <h5 class="modal-title pixel-text"><i class="fas fa-chart-line me-2"></i>LV. 03 - Sistem Monitoring Kinerja Karyawan</h5>
+                        <button type="button" class="btn-close pixel-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body pixel-modal-body">
+                        <div class="row g-4">
+                            <div class="col-lg-7">
+                                <div class="project-detail">
+                                    <div class="pixel-badge-sm mb-3">📋 MISSION BRIEF</div>
+                                    <h6 class="pixel-text fs-6 mb-3">Sistem Monitoring Kinerja Karyawan</h6>
+                                    <p class="mb-3">Sistem Monitoring Kinerja Karyawan membantu HRD dalam mengevaluasi kinerja karyawan berdasarkan target dan KPI yang telah ditentukan.</p>
+                                    <div class="detail-info mb-3">
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Status</span>
+                                            <span class="pixel-text" style="font-size: 0.6rem;">🔄 IN PROGRESS</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Tahun</span>
+                                            <span>2026</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom border-secondary py-2">
+                                            <span class="text-secondary">Progress</span>
+                                            <span class="pixel-text" style="font-size: 0.6rem;">80%</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-tags mb-3">
+                                        <span class="text-secondary d-block mb-2">🏷️ Teknologi:</span>
+                                        <span class="pixel-tag">Laravel</span>
+                                        <span class="pixel-tag">MySQL</span>
+                                        <span class="pixel-tag">Tailwind</span>
+                                    </div>
+                                    <div class="project-features mb-3">
+                                        <span class="text-secondary d-block mb-2">⚡ Fitur Utama:</span>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Manajemen data karyawan</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Penentuan target dan KPI</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Penilaian kinerja periodik</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Grafik visualisasi data</li>
+                                            <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Export laporan Excel</li>
+                                        </ul>
+                                    </div>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="#" target="_blank" class="btn btn-pixel-primary"><i class="fas fa-external-link-alt me-2"></i>Live Demo</a>
+                                        <a href="https://github.com/aidilafif/HR-System-kepegawaian" target="_blank" class="btn btn-pixel-outline"><i class="fab fa-github me-2"></i>GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="project-preview">
+                                    <div class="pixel-badge-sm mb-3">🖼️ PREVIEW</div>
+                                    <div class="pixel-preview-box text-center p-4">
+                                        <img src="assets/img/hr.jpeg" alt="Sistem Monitoring Kinerja" class="img-fluid pixel-screenshot" />
+                                        <p class="small text-secondary mt-2">📸 Screenshot proyek</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pixel-modal-footer">
+                        <button type="button" class="btn btn-pixel-outline" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 5. PENGALAMAN ===== -->
+        <section id="experience" class="py-5">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <span class="pixel-badge mb-2">💼 EXPERIENCE</span>
+                    <h2 class="pixel-text">Pengalaman Kerja</h2>
+                    <div class="pixel-divider-center"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="experience-card pixel-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="pixel-text fs-6">Full Stack Developer - Sistem Inventaris Barang dan ATK</h5>
+                                    <div class="text-secondary small">LAPAS Kelas II B Tanjung Pati</div>
+                                </div>
+                                <div class="pixel-badge-sm" style="font-size: 0.4rem;">2026 - 2026</div>
+                            </div>
+                            <ul class="mt-3 mb-0 list-unstyled">
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Mengembangkan Sistem Inventaris Barang dan ATK berbasis web dengan PHP dan MySQL</li>
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Membangun fitur multi-user (Admin, Staff, Manager) untuk manajemen akses</li>
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Mengimplementasikan fitur laporan PDF untuk barang masuk, keluar, dan stok</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="experience-card pixel-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="pixel-text fs-6">Web Developer - Aplikasi Kunjungan Online LPKA</h5>
+                                    <div class="text-secondary small">Lembaga Pembinaan Khusus Anak</div>
+                                </div>
+                                <div class="pixel-badge-sm" style="font-size: 0.4rem;">2026 - 2026</div>
+                            </div>
+                            <ul class="mt-3 mb-0 list-unstyled">
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Mengembangkan Aplikasi Kunjungan Online LPKA menggunakan Laravel dan MySQL</li>
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Membangun sistem registrasi pengunjung online dengan verifikasi admin</li>
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Mengimplementasikan generate QR Code untuk validasi kunjungan</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="experience-card pixel-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="pixel-text fs-6">Developer - Sistem Monitoring Kinerja Karyawan</h5>
+                                    <div class="text-secondary small">Lapas Kelas II B Tanjung Pati</div>
+                                </div>
+                                <div class="pixel-badge-sm" style="font-size: 0.4rem;">2026 - 2026</div>
+                            </div>
+                            <ul class="mt-3 mb-0 list-unstyled">
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Mengembangkan Sistem Monitoring Kinerja Karyawan dengan Laravel dan Tailwind</li>
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Membangun fitur manajemen data karyawan dan penetapan KPI</li>
+                                <li class="mb-1 small"><i class="fas fa-chevron-right me-2" style="color: var(--pixel-border);"></i>Mengimplementasikan sistem penilaian kinerja periodik</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 6. RESUME ===== -->
+        <section id="resume" class="py-5 pixel-border-top pixel-border-bottom">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <span class="pixel-badge mb-2">📄 RESUME</span>
+                    <h2 class="pixel-text">Curriculum Vitae</h2>
+                    <div class="pixel-divider-center"></div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="resume-card pixel-card text-center">
+                            <div class="resume-icon mb-3">
+                                <i class="fas fa-file-alt fa-5x" style="color: var(--pixel-border);"></i>
+                            </div>
+                            <h5 class="pixel-text fs-6">Download CV Saya</h5>
+                            <p class="small text-secondary">Ringkasan pengalaman dan keahlian lengkap dalam format PDF</p>
+                            <div class="d-flex flex-wrap justify-content-center gap-3">
+                                <a href="assets/pdf/cv_aidilafif.pdf" download class="btn btn-pixel-primary">
+                                    <i class="fas fa-download me-2"></i>Download CV
+                                </a>
+                                <a href="#contact" class="btn btn-pixel-outline">
+                                    <i class="fas fa-envelope me-2"></i>Hubungi Saya
+                                </a>
+                            </div>
+                            
+                            <div class="resume-summary mt-4 text-start">
+                                <h6 class="pixel-text fs-6 mb-3">📋 Ringkasan</h6>
+                                <div class="d-flex align-items-start gap-3 mb-2">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--pixel-border);"></i>
+                                    <span class="small">Full Stack Developer dengan 3+ tahun pengalaman</span>
+                                </div>
+                                <div class="d-flex align-items-start gap-3 mb-2">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--pixel-border);"></i>
+                                    <span class="small">Expert dalam PHP, Laravel, dan MySQL</span>
+                                </div>
+                                <div class="d-flex align-items-start gap-3 mb-2">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--pixel-border);"></i>
+                                    <span class="small">Pernah mengembangkan 3+ aplikasi web untuk instansi pemerintah</span>
+                                </div>
+                                <div class="d-flex align-items-start gap-3 mb-2">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--pixel-border);"></i>
+                                    <span class="small">Berpengalaman dalam tim dan project management</span>
+                                </div>
+                                <div class="d-flex align-items-start gap-3 mb-2">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--pixel-border);"></i>
+                                    <span class="small">Komitmen terhadap kualitas dan best practice</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 7. KONTAK ===== -->
+        <section id="contact" class="py-5">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <span class="pixel-badge mb-2">📡 CONTACT</span>
+                    <h2 class="pixel-text">Hubungi Saya</h2>
+                    <div class="pixel-divider-center"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="contact-info">
+                            <h5 class="pixel-text fs-6 mb-3">📬 Informasi Kontak</h5>
+                            
+                            <a href="mailto:aidilafif@email.com" class="contact-link mb-2">
+                                <i class="fas fa-envelope me-3"></i>
+                                <span>aidilafif3@gmail.com</span>
+                                <i class="fas fa-chevron-right ms-auto"></i>
+                            </a>
+                            <a href="tel:+6281376919039" class="contact-link mb-2">
+                                <i class="fas fa-phone me-3"></i>
+                                <span>+62 813 7691 9039</span>
+                                <i class="fas fa-chevron-right ms-auto"></i>
+                            </a>
+                            <a href="https://wa.me/6281376919039" class="contact-link mb-2">
+                                <i class="fas fa-whatsapp me-3"></i>
+                                <span>+62 813 7691 9039</span>
+                                <i class="fas fa-chevron-right ms-auto"></i>
+                            </a>
+                            <a href="#" class="contact-link mb-2">
+                                <i class="fas fa-map-pin me-3"></i>
+                                <span>Tanggerang Selatan, Indonesia</span>
+                                <i class="fas fa-chevron-right ms-auto"></i>
+                            </a>
+                            
+                            <div class="mt-4">
+                                <h5 class="pixel-text fs-6 mb-3">🌐 Social Media</h5>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <a href="https://www.linkedin.com/in/astro-77a879409/" class="pixel-social-btn" style="min-width: 60px;">
+                                        <i class="fab fa-linkedin-in fa-2x"></i>
+                                        <span class="d-block small mt-1" style="font-size: 0.4rem;">LinkedIn</span>
+                                    </a>
+                                    <a href="https://github.com/aidilafif" class="pixel-social-btn" style="min-width: 60px;">
+                                        <i class="fab fa-github fa-2x"></i>
+                                        <span class="d-block small mt-1" style="font-size: 0.4rem;">GitHub</span>
+                                    </a>
+                                    <a href="https://www.instagram.com/aidilafif_" class="pixel-social-btn" style="min-width: 60px;">
+                                        <i class="fab fa-instagram fa-2x"></i>
+                                        <span class="d-block small mt-1" style="font-size: 0.4rem;">Instagram</span>
+                                    </a>
+                                    <a href="https://www.tiktok.com/@astrbyxx" class="pixel-social-btn" style="min-width: 60px;">
+                                        <i class="fab fa-tiktok fa-2x"></i>
+                                        <span class="d-block small mt-1" style="font-size: 0.4rem;">TikTok</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="contact-form-wrapper pixel-card">
+                            <h5 class="pixel-text fs-6 mb-3">✉️ Kirim Pesan</h5>
+                            <!-- GANTI your-form-id dengan ID Formspree kamu -->
+                            <form action="https://formspree.io/f/your-form-id" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Nama Lengkap</label>
+                                    <input type="text" name="name" class="form-control pixel-input" placeholder="Masukkan nama Anda" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Email</label>
+                                    <input type="email" name="email" class="form-control pixel-input" placeholder="email@anda.com" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Subjek</label>
+                                    <input type="text" name="subject" class="form-control pixel-input" placeholder="Subjek pesan" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Pesan</label>
+                                    <textarea name="message" class="form-control pixel-input" rows="4" placeholder="Tulis pesan Anda..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-pixel-primary w-100">
+                                    <i class="fas fa-paper-plane me-2"></i>Kirim Pesan
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="py-4 pixel-border-top">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="pixel-text small">
+                        <i class="fas fa-copyright me-1"></i> 2026 · Aidil Afif
+                    </div>
+                    <div class="d-flex gap-3">
+                        <span class="pixel-text small">🌙 DARK EDITION</span>
+                        <span class="pixel-text small">
+                            <i class="fas fa-bolt text-warning"></i> v0.1
+                        </span>
+                        <a href="#home" class="pixel-text small text-decoration-none">
+                            <i class="fas fa-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ============================================================
+        // STARFIELD ANIMATION
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('starfield');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let stars = [];
+                let shootingStars = [];
+                let animationId;
+
+                function resize() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+
+                function createStars() {
+                    stars = [];
+                    const count = Math.floor((width * height) / 1500);
+                    for (let i = 0; i < count; i++) {
+                        stars.push({
+                            x: Math.random() * width,
+                            y: Math.random() * height,
+                            size: Math.random() * 2.5 + 0.5,
+                            brightness: Math.random() * 0.6 + 0.4,
+                            blinkSpeed: Math.random() * 0.03 + 0.005,
+                            blinkOffset: Math.random() * Math.PI * 2,
+                            color: Math.random() > 0.8 ? '#ffd700' : '#ffffff'
+                        });
+                    }
+                }
+
+                function createShootingStar() {
+                    if (Math.random() < 0.008) {
+                        shootingStars.push({
+                            x: Math.random() * width,
+                            y: Math.random() * height * 0.3,
+                            length: Math.random() * 100 + 50,
+                            speed: Math.random() * 8 + 4,
+                            angle: Math.PI / 4 + (Math.random() - 0.5) * 0.4,
+                            opacity: 1,
+                            life: 1,
+                            color: Math.random() > 0.7 ? '#ffd700' : '#ffffff'
+                        });
+                    }
+                }
+
+                function drawStars(time) {
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    stars.forEach(star => {
+                        const brightness = star.brightness * (0.7 + 0.3 * Math.sin(time * star.blinkSpeed + star.blinkOffset));
+                        const size = star.size;
+                        ctx.fillStyle = star.color || `rgba(255, 255, 255, ${brightness})`;
+                        ctx.fillRect(Math.round(star.x - size/2), Math.round(star.y - size/2), Math.round(size), Math.round(size));
+                        
+                        if (size > 1.5) {
+                            ctx.shadowColor = `rgba(255, 215, 0, ${brightness * 0.2})`;
+                            ctx.shadowBlur = 10;
+                            ctx.fillRect(Math.round(star.x - size/2), Math.round(star.y - size/2), Math.round(size), Math.round(size));
+                            ctx.shadowBlur = 0;
+                        }
+                    });
+
+                    shootingStars = shootingStars.filter(star => {
+                        star.x += Math.cos(star.angle) * star.speed;
+                        star.y += Math.sin(star.angle) * star.speed;
+                        star.life -= 0.006;
+                        star.opacity = star.life;
+                        if (star.life <= 0) return false;
+
+                        const steps = Math.floor(star.length / 4);
+                        for (let i = 0; i < steps; i++) {
+                            const progress = i / steps;
+                            const opacity = star.opacity * (1 - progress * 0.9);
+                            const x = star.x - Math.cos(star.angle) * (progress * star.length);
+                            const y = star.y - Math.sin(star.angle) * (progress * star.length);
+                            const size = 2 * (1 - progress * 0.8);
+                            ctx.fillStyle = star.color === '#ffd700' 
+                                ? `rgba(255, 215, 0, ${opacity})`
+                                : `rgba(255, 255, 255, ${opacity})`;
+                            ctx.fillRect(Math.round(x - size/2), Math.round(y - size/2), Math.round(size), Math.round(size));
+                        }
+
+                        ctx.fillStyle = star.color === '#ffd700' ? '#ffd700' : '#ffffff';
+                        ctx.shadowColor = star.color === '#ffd700' ? 'rgba(255, 215, 0, 0.5)' : 'rgba(255, 255, 255, 0.3)';
+                        ctx.shadowBlur = 15;
+                        ctx.fillRect(Math.round(star.x - 2), Math.round(star.y - 2), 4, 4);
+                        ctx.shadowBlur = 0;
+                        return true;
+                    });
+                }
+
+                function animate(time) {
+                    createShootingStar();
+                    drawStars(time);
+                    animationId = requestAnimationFrame(animate);
+                }
+
+                function initStarfield() {
+                    resize();
+                    createStars();
+                    if (animationId) cancelAnimationFrame(animationId);
+                    animate(0);
+                }
+
+                initStarfield();
+
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(function() { 
+                        resize(); 
+                        createStars(); 
+                    }, 200);
+                });
+            }
+
+            // ============================================================
+            // NAVBAR SCROLL EFFECT
+            // ============================================================
+            const navbar = document.querySelector('.pixel-navbar');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // ============================================================
+            // ACTIVE LINK HIGHLIGHT
+            // ============================================================
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.pixel-nav-link');
+            
+            function highlightNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 150;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', highlightNav);
+            window.addEventListener('load', highlightNav);
+
+            // ============================================================
+            // CLOSE MOBILE MENU AFTER CLICK
+            // ============================================================
+            const navLinksAll = document.querySelectorAll('.pixel-nav-link');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            const toggler = document.querySelector('.pixel-toggler');
+            
+            navLinksAll.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                        if (bsCollapse) {
+                            bsCollapse.hide();
+                        }
+                        if (toggler) {
+                            toggler.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+            });
+
+            // ============================================================
+            // MODAL ANIMATION
+            // ============================================================
+            document.querySelectorAll('.modal').forEach(function(modal) {
+                modal.addEventListener('show.bs.modal', function() {
+                    const dialog = this.querySelector('.modal-dialog');
+                    if (dialog) {
+                        dialog.style.transform = 'scale(0.8) rotate(-2deg)';
+                        setTimeout(function() { 
+                            dialog.style.transform = 'scale(1) rotate(0deg)'; 
+                        }, 50);
+                    }
+                });
+            });
+
+            // ============================================================
+            // SMOOTH SCROLL
+            // ============================================================
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // ============================================================
+            // KEYBOARD SHORTCUTS
+            // ============================================================
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        const closeBtn = openModal.querySelector('.btn-close');
+                        if (closeBtn) closeBtn.click();
+                    }
+                }
+            });
+
+            // ============================================================
+            // PROGRESS BAR ANIMATION ON SCROLL
+            // ============================================================
+            function animateProgressBars() {
+                const progressBars = document.querySelectorAll('.pixel-progress-bar');
+                progressBars.forEach(function(bar) {
+                    const width = bar.style.width;
+                    if (width) {
+                        bar.style.width = '0%';
+                        
+                        const observer = new IntersectionObserver(function(entries) {
+                            entries.forEach(function(entry) {
+                                if (entry.isIntersecting) {
+                                    setTimeout(function() {
+                                        bar.style.width = width;
+                                    }, 300);
+                                    observer.unobserve(entry.target);
+                                }
+                            });
+                        }, { threshold: 0.3 });
+                        observer.observe(bar);
+                    }
+                });
+            }
+            setTimeout(animateProgressBars, 600);
+
+            console.log('🌙 8-Bit Dark Portfolio v3.0 Loaded!');
+            console.log('💡 Click project cards to see details');
+            console.log('📧 Form using Formspree for contact');
+        });
+    </script>
+</body>
+</html>
